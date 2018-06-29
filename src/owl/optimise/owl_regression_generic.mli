@@ -10,16 +10,7 @@ module Make
   (A : Ndarray_Algodiff)
   : sig
 
-
-  (** {6 Type definition} *)
-
-  type arr = A.arr
-  (** Type of ndarray values. *)
-
-  type elt = A.elt
-  (** Type of scalar values. *)
-
-
+    open A
   (** {6 Regression models} *)
 
   val ols : ?i:bool -> arr -> arr -> arr array

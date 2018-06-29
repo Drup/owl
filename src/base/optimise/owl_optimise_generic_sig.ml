@@ -8,8 +8,10 @@ open Owl_types
 
 module type Sig = sig
 
-  include Owl_algodiff_generic_sig.Sig
+  module A : Ndarray_Algodiff
+  module Algodiff : Owl_algodiff_generic_sig.Sig with module A = A
 
+  open Algodiff
 
   (** {6 Utils module} *)
 

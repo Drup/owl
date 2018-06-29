@@ -10,10 +10,12 @@ module type Sig = sig
 
   (** {6 Type definition} *)
 
-  type arr
+  module A : Ndarray_Algodiff
+
+  type arr = A.arr
   (** General ndarray type *)
 
-  type elt
+  type elt = A.elt
   (** Scalar type *)
 
   type trace_op
@@ -507,6 +509,8 @@ Graphviz.
   (** ``pp_num t`` pretty prints the abstract number used in ``Algodiff``. *)
 
 
+  val _f : float -> t
+  val numel : t -> int
 end
 
 

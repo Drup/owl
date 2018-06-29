@@ -12,6 +12,7 @@ module Make
   (A : Ndarray_Algodiff)
   = struct
 
+    module A = A
   (* type definitions *)
 
   type arr = A.arr

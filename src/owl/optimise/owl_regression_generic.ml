@@ -6,13 +6,16 @@
 open Owl_types
 
 
-module Make
-  (A : Ndarray_Algodiff)
+module Raw
+    (A : Ndarray_Algodiff)
+    (Opt : Owl_optimise_generic_sig.Sig with module A = A)
   = struct
 
-  include Owl_optimise_generic.Make (A)
-
-
+  module A = A 
+  module Opt = Opt
+  open Opt
+  open Algodiff
+  
   (* iterative sovler for linear regression *)
   let _linear_reg bias params x y =
     let s = A.shape x in
@@ -129,3 +132,5 @@ module Make
 
 
 end
+
+module Make (A : Ndarray_Algodiff) = Raw (A) (Owl_optimise_generic.Make(A))

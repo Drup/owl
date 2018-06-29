@@ -7,11 +7,11 @@ open Owl_types
 
 
 module Make
-  (A : Ndarray_Mutable)
+  (Ar : Ndarray_Mutable)
   (E : Owl_types_computation_engine.Sig)
   = struct
 
-  module Engine = E.Make (A)
+  module Engine = E.Make (Ar)
   module CGraph = Engine.CGraph
   module Neural = Owl_neural_generic.Make (Engine.CGraph)
 
@@ -309,7 +309,7 @@ module Make
     Owl_utils.aarr_iter (fun x ->
       let y = Algodiff.unpack_arr x in
       let shape = CGraph.shape y in
-      CGraph.assign_arr y (A.zeros shape)
+      CGraph.assign_arr y (Ar.zeros shape)
     ) [|gs; ps; us; ch|];
 
     (* return key parameters *)

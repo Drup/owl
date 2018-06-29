@@ -8,12 +8,15 @@
 open Owl_types
 
 
-module Make (A : Ndarray_Algodiff) = struct
+module Raw
+    (Algodiff : Owl_algodiff_generic_sig.Sig)
+    (Graph : Owl_neural_graph_sig.Sig with module Algodiff = Algodiff)
+= struct
 
   (* module aliases: graphical network & parallel *)
 
-  module Algodiff       = Owl_algodiff_generic.Make (A)
-  module Graph          = Owl_neural_graph.Make (A)
+  module Algodiff       = Algodiff
+  module Graph          = Graph
   (* module Parallel       = Owl_neural_parallel.Make (Graph) *)
 
   (* module aliases: weight init and activation *)
@@ -36,5 +39,8 @@ module Make (A : Ndarray_Algodiff) = struct
 
 end
 
-
+module Make (A : Ndarray_Algodiff) =
+  Raw
+    (Owl_algodiff_generic.Make(A))
+    (Owl_neural_graph.Make(A))
 (* ends here *)

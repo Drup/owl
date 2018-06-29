@@ -10,13 +10,15 @@ open Owl_types
 module type Sig = sig
 
 
-  module Neuron : Owl_neural_neuron_sig.Sig
+  module Algodiff : Owl_algodiff_generic_sig.Sig
+  module Neuron : Owl_neural_neuron_sig.Sig with module A = Algodiff.A and module Algodiff = Algodiff
 
-  module Optimise : Owl_optimise_generic_sig.Sig
+  module Optimise : Owl_optimise_generic_sig.Sig with module A = Algodiff.A and module Algodiff = Algodiff
 
   open Neuron
 
   open Optimise
+  open Algodiff
 
 
   (** {6 Type definition} *)

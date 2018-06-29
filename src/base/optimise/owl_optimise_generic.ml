@@ -16,12 +16,14 @@ open Owl_types
 
 (* Make functor starts *)
 
-module Make
-  (A : Ndarray_Algodiff)
+module Raw
+    (A : Ndarray_Algodiff)
+    (Algodiff : Owl_algodiff_generic_sig.Sig with module A = A)
   = struct
 
-  include Owl_algodiff_generic.Make (A)
-
+    module A = A
+    module Algodiff = Algodiff
+    open Algodiff
 
   module Utils = struct
 
@@ -810,5 +812,7 @@ module Make
 
 
 end
+
+module Make (A : Ndarray_Algodiff) = Raw (A) (Owl_algodiff_generic.Make(A))
 
 (* Make functor ends *)
